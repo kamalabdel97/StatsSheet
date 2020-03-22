@@ -13,18 +13,17 @@ Store <- rep(c("Store A", "Store B", "Store C"), each = 365) #Creates of column 
 Sales <- data.frame(Store, Revenue) #Creates a dataframe of the Revenue and their corresponding store 
 
 ggplot(Sales, aes(Store, Revenue, label = Revenue, fill = Store)) + 
-  stat_summary(fun.y = "mean", geom = "bar") + #
+  stat_summary(fun.y = "mean", geom = "bar") + #Computes the mean of each Store group to be plotted as a bar
 	 stat_summary(aes(label=round(..y..,2)), fun.y=mean, geom="text", size=6, vjust = -0.5) + #Plots the text of the average value for each level
   theme(panel.background=element_blank()) + #Creates a blank background for the plot's panel
-  theme(plot.background=element_blank()) + #Creates a blank background for the plot 
+  theme(plot.background=element_blank()) + #Creates a blank background for the plot
+  theme(plot.title = element_text(hjust = 0.5))+ #Centers plot title
   theme(legend.position="none") + # Gets rid of the legend
-  labs(title = "Average Revenue per day Between Store A and Store B", #Adds a title for the plot
+  labs(title = "Average Revenue per day Between Store A, Store B, and Store C", #Adds a title for the plot
      x = NULL, y = "Average Revenue" #Labels for the x and y axis
      ) 
 
-
-write.table(Sales, file="Kamal.csv", sep = ',')
-
+write.csv(Sales, file="OneWayAnovaData.csv") #Creates csv file of Sales data that was used in this script
 
 bp_groups <- ggplot(Sales, aes(x= Store, y = Revenue))+ geom_boxplot()
 bp_groups
@@ -32,9 +31,7 @@ bp_groups
 bp_overall <- ggplot(Sales, aes(x = '', y = Revenue)) + geom_boxplot()
 bp_overall
 
-
 oneway.test(Revenue~Store, var.equal = FALSE) #oneway Anova test
-
 
 aov.out = aov (Revenue~Store, data = Sales) # this allows to store the output of the ANOVA test, and use extraction function later on
 summary(aov.out)
