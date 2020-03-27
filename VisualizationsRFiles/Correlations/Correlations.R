@@ -1,3 +1,5 @@
+#The script was provided by TashiNyangmi through his "Correlation/Regression" pull request
+
 library(ggplot2)
 
 #Simulate Perfect positive correlation
