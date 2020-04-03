@@ -44,10 +44,7 @@ y <- s2*p*(x-m1)/s1 + m2 + s2*rnorm(n,0,sqrt(1-p^2))
 
 SlightNegCor <- data.frame(x, y)
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 1eb1d64173e1533171c649b6081efb9f88ed90fa
 ##################################################################
 #Simulate Perfect Negative Correlation
 
@@ -113,42 +110,3 @@ for (i in 1:length(dataset_list)){
 }
 
 ##################################################################
-
-# For regression,
-
-#create a function, "reg_plt_fn" to: Generate, print and save scatterplots with regression line as JPEGs
-
-
-reg_plt_fn <- function(df, title, filename){
-	reg_plt <- ggplot(df, aes(x,y)) + 
-		geom_point()+ 
-		geom_smooth(method = "lm", col = "red", se = FALSE) + # Adds a linear regression line
-		ylim(-10,12) + # sets the range of y-axis
-		xlim(3,12) + # sets the range of x-axis
-		theme(plot.title = element_text(hjust = 0.5)) + #sets the horizontal alignment of title to center
-		labs(title = title) #prints a title w/ the plot
-	
-	ggsave(paste(filename,".jpeg", sep = ""), reg_plt) # saves the plot, "reg_plt" with file name "<filename variable> + .jpeg" to working directory
-	
-}
-
-#create 2 list for the arguments to be passed to the UDF(user defined function), "reg_plt_fn".
-
-title_list_reg <- list("Scatterplot with Regression Line : \n Perfect Postive Correlation",
-	"Scatterplot with Regression Line : \n Slightly Postive Correlation",
-	"Scatterplot with Regression Line : \n No Correlation",
-	"Scatterplot with Regression Line : \n Slightly Negative Correlation",
-	"Scatterplot with Regression Line : \n Perfect Negative Correlation")
-
-plt_filename_list_reg <- list("Regression_Perfect_Postive_Correlation",
-	"Regression_Slightly_Postive_Correlation",
-	"Regression_No_Correlation",
-	"Regression_Slightly_Negative_Correlation",
-	"Regression_Perfect_Negative_Correlation" )
-
-
-#call the function, "reg_plt_fn" within the loop to run it for all dataframes
-
-for (i in 1:length(dataset_list)){
-	reg_plt_fn(dataset_list[[i]], title_list_reg[[i]], plt_filename_list_reg[[i]]) #this function generates, prints, and saves scatterplots as JPEGs
-}
