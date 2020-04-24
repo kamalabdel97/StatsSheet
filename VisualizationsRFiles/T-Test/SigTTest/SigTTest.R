@@ -97,3 +97,5 @@ t.test(x$Revenue, y$Revenue, paired = FALSE)
 # 3) I have not made any change to the InsigTTest.R script
 # this is because I wanted to confirm the changes made in SigTTest.R 
 # before copying them over to InsigTTest.R 
+
+head(Sales)

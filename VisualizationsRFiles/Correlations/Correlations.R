@@ -1,9 +1,9 @@
 #The script was provided by TashiNyangmi through his "Correlation/Regression" pull request
-
+set.seed(1)
 library(ggplot2)
 
 #Simulate Perfect positive correlation
-n <- 100; m1 <- 8; m2 <- 2; s1 <- 1;s2 <- 3;p <- 1
+n <- 100; m1 <- 2; m2 <- 2; s1 <- 1;s2 <- 3;p <- 1
 
 x <- rnorm(n, m1, s1)
 
@@ -14,7 +14,7 @@ PerfPosCor <- data.frame(x, y)
 ##################################################################
 #Simulate Slightly Postive Correlation
 
-n <- 100; m1 <-8; m2 <- 2; s1 <- 1;s2 <- 3;p <- .5
+n <- 100; m1 <-2; m2 <- 2; s1 <- 1;s2 <- 3;p <- .5
 
 x <- rnorm(n, m1, s1)
 
@@ -25,7 +25,7 @@ SlightPosCor <- data.frame(x, y)
 ##################################################################
 #Simulate No Correlation
 
-n <- 100; m1 <-8; m2<-2; s1<-1;s2<-3;p<- 0
+n <- 100; m1 <-2; m2<-2; s1<-1;s2<-3;p<- 0
 
 x<- rnorm(n, m1, s1)
 
@@ -36,7 +36,7 @@ NoCor <- data.frame(x, y)
 ##################################################################
 #Simulate Slightly Negative Correlation
 
-n <- 100; m1 <-8; m2<-2; s1<-1;s2<-3;p<- -.5
+n <- 100; m1 <-2; m2<-2; s1<-1;s2<-3;p<- -.5
 
 x<- rnorm(n, m1, s1)
 
@@ -48,7 +48,7 @@ SlightNegCor <- data.frame(x, y)
 ##################################################################
 #Simulate Perfect Negative Correlation
 
-n <- 100; m1 <-8; m2<-2; s1<-1;s2<-3;p <- -1
+n <- 100; m1 <-2; m2<-2; s1<-1;s2<-3;p <- -1
 
 x <- rnorm(n, m1, s1)
 
@@ -72,17 +72,21 @@ write.csv(PerfNegCor, file="PerfNegCor.csv")
 
 #create a function, "cor_plt_fn" to: Generate, print and save scatterplots as JPEGs
 
+#          TO-DO
+# add a geom_point layer for mean, because
+# we used the same mean, and SD for the different plots. We want to emphasize that.
+
 cor_plt_fn <- function(df, title, filename){
 	
 	cor_plt <- ggplot(df, aes(x,y)) + 
-		geom_point()+ 
-		geom_hline(yintercept = mean(y)) + #creates a horizontal line at the mean of y
-		geom_vline(xintercept = mean(x)) + #creates a vertical line at the mean of x
-		ylim(-10,12) + # sets the range of y-axis
-		xlim(3,12) + # sets the range of x-axis
+		geom_jitter(width = 0.1, alpha = 0.6)+ 
+	  geom_hline(yintercept = 0) + #creates a horizontal line at the mean of y
+	  geom_vline(xintercept = 0) + #creates a vertical line at the mean of x
+		ylim(-7,12) + # sets the range of y-axis
+		xlim(-7,12) + # sets the range of x-axis
 		theme(plot.title = element_text(hjust = 0.5)) + #sets the horizontal alignment of title to center
 		labs(title = title) #prints a title w/ the plot
-	
+	print(cor_plt)
 	ggsave(paste(filename,".jpeg", sep = ""), cor_plt) # saves the plot, "cor_plt" with file name "<filename variable> + .jpeg" to working directory
 	
 }
